@@ -13,20 +13,31 @@ struct ListView: View {
     @EnvironmentObject var listViewModel : ListViewModel
     
     var body: some View {
-        List{
-            ForEach(listViewModel.items) { item in
-                ListRowView(item: item)
-                    .onTapGesture {
-                        withAnimation(.linear) {
-                            listViewModel.updateItem(item: item)
-                        }
+        
+        ZStack{
+            if listViewModel.items.isEmpty {
+                
+                NoItemsViews()
+                    .transition(AnyTransition.opacity.animation(.easeIn))
+                
+                
+            }else{
+                List{
+                    ForEach(listViewModel.items) { item in
+                        ListRowView(item: item)
+                            .onTapGesture {
+                                withAnimation(.linear) {
+                                    listViewModel.updateItem(item: item)
+                                }
+                            }
                     }
-            }
-            .onDelete(perform: listViewModel.deleteItem)
-            .onMove(perform: listViewModel.moveItems)
+                    .onDelete(perform: listViewModel.deleteItem)
+                    .onMove(perform: listViewModel.moveItems)
 
+                }
+                .listStyle(PlainListStyle())
+            }
         }
-        .listStyle(PlainListStyle())
         .navigationTitle("Todo List 📆")
         .navigationBarItems(
             leading: EditButton(),
@@ -34,6 +45,7 @@ struct ListView: View {
                 AddView()
             })
         )
+        .foregroundColor(.primary)
         
     }
     
@@ -48,6 +60,7 @@ struct LiistView_Previews: PreviewProvider {
             ListView()
         }
         .environmentObject(ListViewModel()) // if we will not do this the app will crash
+        .navigationViewStyle(StackNavigationViewStyle()) // Specificly done fot ipad responsiveness
     }
 }
 //#Preview {
