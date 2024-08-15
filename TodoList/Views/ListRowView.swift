@@ -9,19 +9,30 @@ import SwiftUI
 
 struct ListRowView: View {
     
-    let title: String
+    let item: ItemModel
     
     var body: some View {
         HStack{
-            Image(systemName: "checkmark.circle")
-            Text(title)
+            Image(systemName: item.isCompleted ? "checkmark.circle" : "circle")
+                .foregroundColor(item.isCompleted ? .green : .red)
+            Text(item.title)
             Spacer()
         }
     }
 }
 struct ListRowView_Previews: PreviewProvider {
+    static var item1 = ItemModel(title: "First Item", isCompleted: true)
+    static var item2 = ItemModel(title: "Second Item", isCompleted: false)
     static var previews: some View{
-        ListRowView(title: "")
+        //ListRowView(item : ItemModel(title: "This is task by Default", isCompleted: true))
         
+//        ListRowView(item: item1)
+//        ListRowView(item: item2)  // is trah 2 screen dikhata hai
+        
+        Group {
+            ListRowView(item: item1)
+            ListRowView(item: item2)
+        }
+        .previewLayout(.sizeThatFits) // yr krny sy bhi frk nhi pra kuch
     }
 }
