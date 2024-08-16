@@ -15,6 +15,8 @@ struct AddView: View {
     @State var showAlert : Bool = false
     @State var alertTitle : String = ""
     
+    @State var textCount : Int = 0
+    
     var body: some View {
         ScrollView{
             VStack{
@@ -35,6 +37,8 @@ struct AddView: View {
                         .background(Color.accentColor)
                         .cornerRadius(10)
                 })
+                .disabled(textFieldText.count<3 ? true : false)
+                
                     
                 
             }

@@ -18,6 +18,8 @@ import Foundation
 
 class ListViewModel: ObservableObject {
     
+    var showAlertBeforeDel : Bool = false
+    
     @Published var items: [ItemModel] = [] {
         didSet{
             saveItems()
@@ -47,6 +49,7 @@ class ListViewModel: ObservableObject {
     }
     
     func deleteItem(indexSet: IndexSet){
+        
         items.remove(atOffsets: indexSet)
     }
     
@@ -73,6 +76,10 @@ class ListViewModel: ObservableObject {
         }
             
     }
+    
+//    func showAlertBeforeDelete(){
+//        
+//    }
     
     func saveItems(){
         if let encodedData = try? JSONEncoder().encode(items){

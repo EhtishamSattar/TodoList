@@ -11,6 +11,7 @@ struct ListView: View {
     
     //@State var items: [ItemModel] = []
     @EnvironmentObject var listViewModel : ListViewModel
+    @State var showAlert : Bool = false
     
     var body: some View {
         
@@ -31,8 +32,15 @@ struct ListView: View {
                                 }
                             }
                     }
-                    .onDelete(perform: listViewModel.deleteItem)
+//                    .alert(isPresented: $showAlert, content: {
+//                        return Alert(title: Text("You sms will be deleted"))
+//                    })
                     .onMove(perform: listViewModel.moveItems)
+//                    .onDelete(perform: { IndexSet in
+//                        showAlert.toggle()
+//                    })
+                    .onDelete(perform: listViewModel.deleteItem)
+                    
 
                 }
                 .listStyle(PlainListStyle())
@@ -48,8 +56,7 @@ struct ListView: View {
         .foregroundColor(.primary)
         
     }
-    
-    
+
         
 }
 
